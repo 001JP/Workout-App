@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_color"
+
+    tools:context=".BMIActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bmi_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/default_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="BMI Calculator"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/radio_group_tab_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bmi_toolbar">
+
+        <RadioButton
+            android:id="@+id/metric_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/units_tab_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="METRIC"
+            android:textColor="@drawable/units_tab_text_color_selector"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/us_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/units_tab_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="US"
+            android:textColor="@drawable/units_tab_text_color_selector"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RadioGroup>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/height_cm_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:textColorHint="@color/text_color"
+        app:boxBackgroundColor="@color/light_gray"
+        app:boxStrokeColor="@color/text_color"
+        app:hintTextColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/height_cm_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Height (cm)"
+            android:inputType="numberDecimal"
+            android:textColor="@color/text_color"
+            android:textColorHint="#001253" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weight_kg_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:textColorHint="@color/text_color"
+        app:boxBackgroundColor="@color/light_gray"
+        app:boxStrokeColor="@color/text_color"
+        app:hintTextColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height_cm_InputLayout">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/weight_kg_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight (kg)"
+            android:inputType="numberDecimal"
+            android:textColor="@color/text_color"
+            android:textColorHint="#001253" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/height_inch_Layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:textColorHint="@color/text_color"
+        app:boxBackgroundColor="@color/light_gray"
+        app:boxStrokeColor="@color/text_color"
+        app:hintTextColor="@color/text_color"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/height_feet_Layout"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/height_inch_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="inches"
+            android:inputType="numberDecimal"
+            android:textColor="@color/text_color"
+            android:textColorHint="#001253" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/height_feet_Layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textColorHint="@color/text_color"
+        app:boxBackgroundColor="@color/light_gray"
+        app:boxStrokeColor="@color/text_color"
+        app:hintTextColor="@color/text_color"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/height_inch_Layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/height_feet_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Height (Feet)"
+            android:inputType="numberDecimal"
+            android:textColor="@color/text_color"
+            android:textColorHint="#001253" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weight_pounds_Layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:textColorHint="@color/text_color"
+        app:boxBackgroundColor="@color/light_gray"
+        app:boxStrokeColor="@color/text_color"
+        app:hintTextColor="@color/text_color"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height_cm_InputLayout">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/weight_pounds_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight (pounds)"
+            android:inputType="numberDecimal"
+            android:textColor="@color/text_color"
+            android:textColorHint="#001253" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/result_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Body Mass Index: 20"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weight_kg_InputLayout" />
+
+    <TextView
+        android:id="@+id/classification_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Classification: Normal"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_textView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/calculate_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/finish_btn_ripple_style"
+        android:text="CALCULATE"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classification_textView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
