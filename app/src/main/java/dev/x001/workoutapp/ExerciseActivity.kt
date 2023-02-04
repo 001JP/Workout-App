@@ -3,7 +3,6 @@ package dev.x001.workoutapp
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.net.Uri
@@ -12,18 +11,19 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.google.android.material.snackbar.Snackbar
+import dev.x001.workoutapp.adapter.ExerciseStatusAdapter
+import dev.x001.workoutapp.database.HistoryApp
+import dev.x001.workoutapp.database.HistoryDAO
+import dev.x001.workoutapp.database.HistoryDatabase
+import dev.x001.workoutapp.database.HistoryEntity
 import dev.x001.workoutapp.databinding.ActivityExerciseBinding
 import dev.x001.workoutapp.databinding.DialogBackBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,12 +34,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var timerDuration: Long = 0
 
     private lateinit var exerciseList: ArrayList<ExerciseModel>
-    private var currentExercisePosition = -1 //-1
+    private var currentExercisePosition = 9 //-1
     private lateinit var currentExercise : ExerciseModel
     private lateinit var tts: TextToSpeech
     private lateinit var player: MediaPlayer
+    private var workoutSessionStatus = "Not Finished"
 
     private lateinit var exerciseAdapter : ExerciseStatusAdapter
+    private var workOutID = 0
+    private var database = HistoryDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,22 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         restTimer()
         setToggleButton()
         setupExerciseStatusRecyclerView()
+
+        val historyDao = (application as HistoryApp).db.historyDao()
+
+        addHistory(historyDao)
+
+        lifecycleScope.launch {
+            historyDao.fetchAllRecords().collect{
+                if(it.isNotEmpty()){
+                    val list = ArrayList(it)
+                    val lastRecord = list.last()
+                    workOutID = lastRecord.id
+                }else{
+                    workOutID = 0
+                }
+            }
+        }
     }
 
     private fun setUpToolBar(){
@@ -116,7 +135,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 
     private fun restTimer(){
-        timerDuration = 11000
+        timerDuration = 1000
         binding.restTimerView.visibility = View.VISIBLE
         binding.exerciseTimerView.visibility = View.GONE
         binding.lottieExercise.visibility = View.INVISIBLE
@@ -157,7 +176,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun exerciseTimer(){
         currentExercise  = exerciseList[currentExercisePosition]
 
-        timerDuration = 31000
+        timerDuration = 1000//31000
         binding.restTimerView.visibility = View.INVISIBLE
         binding.exerciseTimerView.visibility = View.VISIBLE
         binding.lottieExercise.visibility = View.VISIBLE
@@ -186,7 +205,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 } else {
                     val intent = Intent(applicationContext, FinishActivity::class.java)
                     startActivity(intent)
-
+                    val historyDao = (application as HistoryApp).db.historyDao()
+                    updateFinishHistory(workOutID, historyDao)
                 }
             }
         }.start()
@@ -207,6 +227,28 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 player.start()
             } catch (e: Exception){
                 Log.e("Error", "Error playing media sound occurred")
+            }
+        }
+    }
+
+    private fun addHistory(historyDAO: HistoryDAO){
+        val dateFormat = SimpleDateFormat("MMM. dd, yyyy h:mm a")
+        val dateAndTime = Calendar.getInstance().time
+        val formattedDateAndTime = dateFormat.format(dateAndTime)
+
+        lifecycleScope.launch {
+            historyDAO.insert(HistoryEntity(dateAndTime = formattedDateAndTime.toString(), status = workoutSessionStatus))
+        }
+    }
+
+    private fun updateFinishHistory(id: Int, historyDAO: HistoryDAO){
+        val dateFormat = SimpleDateFormat("MMM. dd, yyyy h:mm a")
+        val dateAndTime = Calendar.getInstance().time
+        val formattedDateAndTime = dateFormat.format(dateAndTime)
+
+        lifecycleScope.launch{
+            historyDAO.fetchRecordById(id).collect{
+                historyDAO.update(HistoryEntity(id, formattedDateAndTime, "Finished"))
             }
         }
     }

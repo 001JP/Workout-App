@@ -19,22 +19,23 @@ class FinishActivity : AppCompatActivity() {
         setUpToolBar()
 
         binding.trophyLottie.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
 
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 binding.confettiLottie.visibility = View.VISIBLE
                 binding.confettiLottie.playAnimation()
             }
 
-            override fun onAnimationCancel(animation: Animator?) {
+            override fun onAnimationCancel(animation: Animator) {
 
             }
 
-            override fun onAnimationRepeat(animation: Animator?) {
+            override fun onAnimationRepeat(animation: Animator) {
 
             }
+
         })
 
         binding.trophyLottie.setOnClickListener{
