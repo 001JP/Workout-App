@@ -24,6 +24,6 @@ Workout app developed in kotlin.
 
 ## Demo
 
-[Download App on APKFab](https://apkfab.com/workout-app/dev.x001.workoutapp/apk?h=95687c5655ff8a099495ae82cda7ac5a5b5b7710157a943957be7cd034c365e0)
+[Download App on APKFab](https://apkfab.com/workout-app/dev.x001.workoutapp/apk?h=b47258a6b675e70153bf24735c0671e0c50662c21576e977790693d2a12d2808)
 
 ![Demo](https://i.imgur.com/SSmDU3Q.gif)
