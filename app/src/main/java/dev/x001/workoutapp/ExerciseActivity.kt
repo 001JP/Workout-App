@@ -34,7 +34,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var timerDuration: Long = 0
 
     private lateinit var exerciseList: ArrayList<ExerciseModel>
-    private var currentExercisePosition = 9 //-1
+    private var currentExercisePosition = -1 //-1
     private lateinit var currentExercise : ExerciseModel
     private lateinit var tts: TextToSpeech
     private lateinit var player: MediaPlayer
@@ -135,7 +135,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 
     private fun restTimer(){
-        timerDuration = 1000
+        timerDuration = 11000
         binding.restTimerView.visibility = View.VISIBLE
         binding.exerciseTimerView.visibility = View.GONE
         binding.lottieExercise.visibility = View.INVISIBLE
@@ -176,7 +176,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun exerciseTimer(){
         currentExercise  = exerciseList[currentExercisePosition]
 
-        timerDuration = 1000//31000
+        timerDuration = 31000//31000
         binding.restTimerView.visibility = View.INVISIBLE
         binding.exerciseTimerView.visibility = View.VISIBLE
         binding.lottieExercise.visibility = View.VISIBLE
