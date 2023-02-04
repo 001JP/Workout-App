@@ -1,6 +1,6 @@
 # Work Out App
 
-Drawing app developed in kotlin.
+Workout app developed in kotlin.
 
 
 ![Logo](https://i.imgur.com/Lk4Ss5M.png)
